@@ -21,3 +21,8 @@ def sortSeleccion(arreglo):
             arreglo[posicion] = arreglo[x]
             arreglo[x] = min_value
         return arreglo
+
+#Algoritmo de busqueda: burbuja.
+def burbuja(arreglo):
+    a=1
+    return a
