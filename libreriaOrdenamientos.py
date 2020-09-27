@@ -21,6 +21,22 @@ def sortSeleccion(arreglo):
             arreglo[posicion] = arreglo[x]
             arreglo[x] = min_value
         return arreglo
+#__Algoritmo de ordenamiento de Inserción__
+def sortInsercion(arreglo):
+    if isOrdenado(arreglo): return arreglo
+    else:
+        for recorrido in range (0, len(arreglo)):
+            if arreglo[recorrido-1]>arreglo[recorrido]:
+                for recorridoInsercion in range(0, recorrido):
+                    if arreglo[recorridoInsercion]>arreglo[recorrido]:
+                        aux = arreglo[recorridoInsercion]
+                        arreglo[recorridoInsercion] = arreglo[recorrido]
+                        arreglo[recorrido] = aux
+                    else:
+                        aux = arreglo[recorrido-1]
+                        arreglo[recorrido-1] = arreglo[recorrido]
+                        arreglo[recorrido] = aux
+    return arreglo
 
 #__Algoritmo de ordenamiento Burbuja__
 def sortBurbuja(arreglo):
@@ -35,9 +51,10 @@ def sortBurbuja(arreglo):
     return arreglo
 
 #__ APARTADO DE PRUEBAS __
-arreglo=[1,2,5,4,30,5,1,68,48,2,6]
+arreglo=[10,20,7,25,5,19,32,2]
 print("-----------------------------------------------------")
 print("El resultado de sortSelección es:", sortSeleccion(arreglo))
 print("-----------------------------------------------------")
 print("El resultado de sortBurbuja es:",sortBurbuja(arreglo))
 print("-----------------------------------------------------")
+print("El resultado de sortInsercion es:",sortInsercion(arreglo))
