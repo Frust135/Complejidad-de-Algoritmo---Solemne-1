@@ -21,6 +21,7 @@ def sortSeleccion(arreglo):
             arreglo[posicion] = arreglo[x]
             arreglo[x] = min_value
         return arreglo
+
 #__Algoritmo de ordenamiento de Inserción__
 def sortInsercion(arreglo):
     if isOrdenado(arreglo): return arreglo
@@ -49,12 +50,31 @@ def sortBurbuja(arreglo):
                     arreglo[x] = arreglo[recorrido]
                     arreglo[recorrido] = aux
     return arreglo
+#__Algoritmo de ordenamiento QuickSort__
+def quickSort(arreglo):
+    if len(arreglo)<=1: return arreglo
+    else:
+        pivote = arreglo[0]
+        arreglo_mayores=[]
+        arreglo_menores=[]
+        for recorrido in range (1, len(arreglo)):
+            if arreglo[recorrido]>pivote: 
+                arreglo_mayores.append(arreglo[recorrido])
+            else:
+                arreglo_menores.append(arreglo[recorrido])
+        return quickSort(arreglo_menores) + [pivote] + quickSort(arreglo_mayores)
+
 
 #__ APARTADO DE PRUEBAS __
-arreglo=[10,20,7,25,5,19,32,2]
+arregloSeleccion=[10,20,7,25,5,19,32,2]
+arregloBurbuja=[10,20,7,25,5,19,32,2]
+arregloInsercion=[10,20,7,25,5,19,32,2]
+arregloQuickSort=[10,20,7,25,5,19,32,2]
 print("-----------------------------------------------------")
-print("El resultado de sortSelección es:", sortSeleccion(arreglo))
+print("El resultado de sortSelección es:", sortSeleccion(arregloSeleccion))
 print("-----------------------------------------------------")
-print("El resultado de sortBurbuja es:",sortBurbuja(arreglo))
+print("El resultado de sortBurbuja es:",sortBurbuja(arregloBurbuja))
 print("-----------------------------------------------------")
-print("El resultado de sortInsercion es:",sortInsercion(arreglo))
+print("El resultado de sortInsercion es:",sortInsercion(arregloInsercion))
+print("-----------------------------------------------------")
+print("El resultado de quickSort es:", quickSort(arregloQuickSort))
