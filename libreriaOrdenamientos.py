@@ -1,12 +1,15 @@
+#-------------------------------------------------------------------
 #__Algoritmo que retorna si un arreglo se encuentra ordenado o no__
+#-------------------------------------------------------------------
 def isOrdenado (arreglo):
     longitud_arreglo = len(arreglo)
     for x in range(0, longitud_arreglo):
         for y in range(x+1, longitud_arreglo):
             if arreglo[x] > arreglo[y]: return False
     return True
-
+#-------------------------------------------------------------------
 #__Algoritmo de ordenamiento de Selección__
+#-------------------------------------------------------------------
 def sortSeleccion(arreglo):
     if isOrdenado(arreglo): return arreglo
     else:
@@ -21,8 +24,9 @@ def sortSeleccion(arreglo):
             arreglo[posicion] = arreglo[x]
             arreglo[x] = min_value
         return arreglo
-
+#-------------------------------------------------------------------
 #__Algoritmo de ordenamiento de Inserción__
+#-------------------------------------------------------------------
 def sortInsercion(arreglo):
     if isOrdenado(arreglo): return arreglo
     else:
@@ -38,8 +42,9 @@ def sortInsercion(arreglo):
                         arreglo[recorrido-1] = arreglo[recorrido]
                         arreglo[recorrido] = aux
     return arreglo
-
+#-------------------------------------------------------------------
 #__Algoritmo de ordenamiento Burbuja__
+#-------------------------------------------------------------------
 def sortBurbuja(arreglo):
     if isOrdenado(arreglo): return arreglo
     else:
@@ -50,7 +55,10 @@ def sortBurbuja(arreglo):
                     arreglo[x] = arreglo[recorrido]
                     arreglo[recorrido] = aux
     return arreglo
+
+#-------------------------------------------------------------------
 #__Algoritmo de ordenamiento QuickSort__
+#-------------------------------------------------------------------
 def quickSort(arreglo):
     if len(arreglo)<=1: return arreglo
     else:
@@ -63,13 +71,36 @@ def quickSort(arreglo):
             else:
                 arreglo_menores.append(arreglo[recorrido])
         return quickSort(arreglo_menores) + [pivote] + quickSort(arreglo_mayores)
-
-
+#-------------------------------------------------------------------
+#__Algoritmo de ordenamiento MergeSort__
+#-------------------------------------------------------------------
+def mergeSort(arreglo):
+    if len(arreglo)<=1: return arreglo
+    else:
+       mitad = len(arreglo) //2
+       mitad_izquierda=arreglo[mitad:]
+       mitad_derecha=arreglo[:mitad]
+       arreglo.clear()
+       mergeSort(mitad_izquierda)
+       mergeSort(mitad_derecha)
+       while len(mitad_izquierda)>0 and len(mitad_derecha)>0:
+            if mitad_izquierda[0]<mitad_derecha[0]:
+                arreglo.append(mitad_izquierda.pop(0))
+            else:
+                arreglo.append(mitad_derecha.pop(0))
+       while len(mitad_izquierda)>0:
+           arreglo.append(mitad_izquierda.pop(0))
+       while len(mitad_derecha)>0:
+           arreglo.append(mitad_derecha.pop(0))
+       return arreglo
+#-------------------------------------------------------------------
 #__ APARTADO DE PRUEBAS __
+#-------------------------------------------------------------------
 arregloSeleccion=[10,20,7,25,5,19,32,2]
 arregloBurbuja=[10,20,7,25,5,19,32,2]
 arregloInsercion=[10,20,7,25,5,19,32,2]
 arregloQuickSort=[10,20,7,25,5,19,32,2]
+arregloMergeSort=[10,20,7,25,5,19,32,2]
 print("-----------------------------------------------------")
 print("El resultado de sortSelección es:", sortSeleccion(arregloSeleccion))
 print("-----------------------------------------------------")
@@ -78,3 +109,5 @@ print("-----------------------------------------------------")
 print("El resultado de sortInsercion es:",sortInsercion(arregloInsercion))
 print("-----------------------------------------------------")
 print("El resultado de quickSort es:", quickSort(arregloQuickSort))
+print("-----------------------------------------------------")
+print("El resultado de MergeSort es:", mergeSort(arregloMergeSort))
