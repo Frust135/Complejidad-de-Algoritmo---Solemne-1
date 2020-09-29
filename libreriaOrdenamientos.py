@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------
-#__Algoritmo que retorna si un arreglo se encuentra ordenado o no__
+#      Algoritmo que retorna si un arreglo se encuentra ordenado o no
 #-------------------------------------------------------------------
 def isOrdenado (arreglo):
     longitud_arreglo = len(arreglo)
@@ -8,7 +8,7 @@ def isOrdenado (arreglo):
             if arreglo[x] > arreglo[y]: return False #Compara uno por uno los datos con el fin de observar que esten todos ordenados, en caso de no haber un orden, retorna falso
     return True
 #-------------------------------------------------------------------
-#__Algoritmo de ordenamiento de Selección__
+#      Algoritmo de ordenamiento de Selección
 #-------------------------------------------------------------------
 def sortSeleccion(arreglo):
     if isOrdenado(arreglo): return arreglo #En caso de que el algoritmo ya este ordenado, retorna el arreglo
@@ -25,7 +25,7 @@ def sortSeleccion(arreglo):
             arreglo[x] = min_value #Y en la posición de x, que es donde está el valor mayor al mínimo, se reemplaza con el valor mínimo
         return arreglo
 #-------------------------------------------------------------------
-#__Algoritmo de ordenamiento de Inserción__
+#      Algoritmo de ordenamiento de Inserción
 #-------------------------------------------------------------------
 def sortInsercion(arreglo):
     if isOrdenado(arreglo): return arreglo
@@ -43,7 +43,7 @@ def sortInsercion(arreglo):
                         arreglo[recorrido] = aux
     return arreglo
 #-------------------------------------------------------------------
-#__Algoritmo de ordenamiento Burbuja__
+#      Algoritmo de ordenamiento Burbuja
 #-------------------------------------------------------------------
 def sortBurbuja(arreglo):
     if isOrdenado(arreglo): return arreglo
@@ -57,7 +57,7 @@ def sortBurbuja(arreglo):
     return arreglo
 
 #-------------------------------------------------------------------
-#__Algoritmo de ordenamiento QuickSort__
+#      Algoritmo de ordenamiento QuickSort
 #-------------------------------------------------------------------
 def quickSort(arreglo):
     if len(arreglo)<=1: return arreglo #Nuestro caso base corresponde a cuando la longitud del arreglo es menor a 1
@@ -72,7 +72,7 @@ def quickSort(arreglo):
                 arreglo_menores.append(arreglo[recorrido]) #Si el elemento es menor al pivote, lo almacenamos en el arreglo de menores
         return quickSort(arreglo_menores) + [pivote] + quickSort(arreglo_mayores) #Concatemos lo que corresponde el arreglo de menores, el pivote, y el arreglo de menores en dicho orden, pero antes se realiza una llamada recursiva para ordenar el arreglo de menores y mayores, y así sucesivamente
 #-------------------------------------------------------------------
-#__Algoritmo de ordenamiento MergeSort__
+#      Algoritmo de ordenamiento MergeSort
 #-------------------------------------------------------------------
 def mergeSort(arreglo):
     if len(arreglo)<=1: return arreglo #De la misma forma que en el caso anterior, nuestro caso base es cuando la longitud del arreglo es menor a 1
@@ -93,14 +93,20 @@ def mergeSort(arreglo):
        while len(mitad_derecha)>0: #Lo mismo en caso que sobrasen datos en la mitad derecha, ya que se entiende que dichos elementos son los mayores del arreglo
            arreglo.append(mitad_derecha.pop(0) )
        return arreglo
+
 #-------------------------------------------------------------------
-#__ APARTADO DE PRUEBAS __
+#      Algoritmo de ordenamiento HeapSort
+#-------------------------------------------------------------------
+
+#-------------------------------------------------------------------
+#      APARTADO DE PRUEBAS 
 #-------------------------------------------------------------------
 arregloSeleccion=[10,20,7,25,5,19,32,2]
 arregloBurbuja=[10,20,7,25,5,19,32,2]
 arregloInsercion=[10,20,7,25,5,19,32,2]
 arregloQuickSort=[10,20,7,25,5,19,32,2]
 arregloMergeSort=[10,20,7,25,5,19,32,2]
+arregloHergeSort=[10,20,7,25,5,19,32,2]
 print("-----------------------------------------------------")
 print("El resultado de sortSelección es:", sortSeleccion(arregloSeleccion))
 print("-----------------------------------------------------")
@@ -111,3 +117,4 @@ print("-----------------------------------------------------")
 print("El resultado de quickSort es:", quickSort(arregloQuickSort))
 print("-----------------------------------------------------")
 print("El resultado de MergeSort es:", mergeSort(arregloMergeSort))
+print("-----------------------------------------------------")
