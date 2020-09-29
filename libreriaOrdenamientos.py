@@ -56,6 +56,7 @@ def sortBurbuja(arreglo):
                     arreglo[recorrido] = aux #Y el elemento mayor, baja
     return arreglo
 
+<<<<<<< Updated upstream
 #-------------------------------------------------------------------
 #__Algoritmo de ordenamiento QuickSort__
 #-------------------------------------------------------------------
@@ -111,3 +112,16 @@ print("-----------------------------------------------------")
 print("El resultado de quickSort es:", quickSort(arregloQuickSort))
 print("-----------------------------------------------------")
 print("El resultado de MergeSort es:", mergeSort(arregloMergeSort))
+=======
+#Algoritmo de busqueda: burbuja.
+def sortburbuja(arreglo):
+    for dato in range(len(arreglo)-1,0,-1):
+        for i in range(dato):
+            if arreglo[i]>arreglo[i+1]:
+                temp = arreglo[i]
+                arreglo[i] = arreglo[i+1]
+                arreglo[i+1]=temp
+
+#Algoritmo de busqueda: Quicksort
+def particion 
+>>>>>>> Stashed changes
