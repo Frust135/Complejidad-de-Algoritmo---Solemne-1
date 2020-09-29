@@ -97,7 +97,37 @@ def mergeSort(arreglo):
 #-------------------------------------------------------------------
 #      Algoritmo de ordenamiento HeapSort
 #-------------------------------------------------------------------
+#Comprender que este algoritmo genera un  Heap (un árbol binario), en el cual, se comparan los hijos con cada padre para ver cual es mayor
+#Y una vez que exista un orden, se continua a reemplazar la raíz, y siendo la raíz el dato más grande, se almacena al final del arreglo.
 
+#      Algoritmo HeapSort
+def heapSort(arreglo):
+    longitud = len(arreglo)
+    mitad_longitud = longitud//2
+    for recorrido in range(mitad_longitud-1, -1, -1): #Empezamos en la mitad del arreglo-1, ya que ahí se encontrará la primera raíz, o nodo padre
+        generarHeap(arreglo, longitud, recorrido) #Generamos el Heap de máximos del arreglo
+    for recorrido in range(longitud-1, 0, -1): #Una vez realizado el Heap, continuamos a extraer los elementos, cambiando sus posiciones con la raíz
+        aux = arreglo[recorrido]
+        arreglo[recorrido] = arreglo[0]
+        arreglo[0] = aux #Recordar que siempre vamos a ir removiendo la raíz, y reemplazandola por el hijo mayor
+        generarHeap(arreglo, recorrido, 0) #Y se realiza otro Heap
+    return arreglo
+
+#      Algoritmo que genera el Heap (árbol binario)
+
+def generarHeap(arreglo, longitud_heap, longitud_final):
+    elemento_mayor = longitud_final
+    hIzq = 2*elemento_mayor+1 #Dentro del Heap, empezamos indicando las posiciones del hijo izquierdo
+    hDer = 2*elemento_mayor+2 #Y también del hijo derecho
+    if hIzq<longitud_heap and arreglo[longitud_final]<arreglo[hIzq]: #Comparamos si existe un hijo izquierdo, y si es mayor que la raíz
+        elemento_mayor = hIzq #De ser así, este será el valor del parámetro más grande
+    if hDer<longitud_heap and arreglo[elemento_mayor]<arreglo[hDer]: #De la misma forma, si el hijo izquierdo no existe, o es menor que la raíz, continuamos con el hijo derecho
+        elemento_mayor = hDer
+    if elemento_mayor != longitud_final: #En caso de que los hijos sean menores que la raíz, se coninua a reemplazar la raíz con el elemento que corresponda al elemento mayor, o en caso contrario, con el que se encuentre más a la derecha de los hijos
+        aux = arreglo[longitud_final]
+        arreglo[longitud_final] = arreglo[elemento_mayor]
+        arreglo[elemento_mayor] = aux 
+        generarHeap(arreglo, longitud_heap,elemento_mayor) #Se realiza el cambio, y se realiza otro Heap
 #-------------------------------------------------------------------
 #      APARTADO DE PRUEBAS 
 #-------------------------------------------------------------------
@@ -106,7 +136,7 @@ arregloBurbuja=[10,20,7,25,5,19,32,2]
 arregloInsercion=[10,20,7,25,5,19,32,2]
 arregloQuickSort=[10,20,7,25,5,19,32,2]
 arregloMergeSort=[10,20,7,25,5,19,32,2]
-arregloHergeSort=[10,20,7,25,5,19,32,2]
+arregloHeapSort=[10,20,7,25,5,19,32,2,2,15,3,1,94]
 print("-----------------------------------------------------")
 print("El resultado de sortSelección es:", sortSeleccion(arregloSeleccion))
 print("-----------------------------------------------------")
@@ -117,4 +147,6 @@ print("-----------------------------------------------------")
 print("El resultado de quickSort es:", quickSort(arregloQuickSort))
 print("-----------------------------------------------------")
 print("El resultado de MergeSort es:", mergeSort(arregloMergeSort))
+print("-----------------------------------------------------")
+print("El resultado de HeapSort es:", heapSort(arregloHeapSort))
 print("-----------------------------------------------------")
