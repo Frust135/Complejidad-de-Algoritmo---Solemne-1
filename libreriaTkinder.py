@@ -1,5 +1,4 @@
 from tkinter import *
-
 #muestra los datos que se agregaron a la lista
 def enviar_info():
     User_ingreso = Ingreso.get()
@@ -7,7 +6,11 @@ def enviar_info():
     print(User_ingreso)
 
 def agregar_info():
-    Lista_numeros.insert(END,Ingreso.get())
+    StringIngreso = Ingreso.get()
+    StringIngreso = StringIngreso.split(sep=',') #Separa el arreglo en partes
+    StringIngreso = list(map(int,StringIngreso)) #Convierte el arreglo a Int
+    Lista_numeros.insert(END,StringIngreso) #Añade el arreglo de int al cuadro de texto
+    print(StringIngreso)
 
 
 #creacion de la ventana
@@ -26,13 +29,12 @@ Ingreso = StringVar()
 
 User_entry = Entry(textvariable=Ingreso)
 User_entry.place(x= 100, y=100)
-StringIngreso = Ingreso.get()
-#creacion lista
 
-Lista_numeros = StringIngreso.split(sep=',')
-print(Lista_numeros)
+#creacion lista
+Lista_numeros = Listbox(mywindow)
+Lista_numeros.place(x=60, y=200)
 #creacion de boton para guardar la informacion
-Btn_ingresa = Button(mywindow, text="Ingresar", command=agregar_info)
+Btn_ingresa = Button(mywindow, text="Ingresar", command= agregar_info)
 Btn_ingresa.place(x=60, y=150)
 
 mywindow.mainloop()
