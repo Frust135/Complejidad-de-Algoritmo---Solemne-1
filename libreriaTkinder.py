@@ -93,22 +93,22 @@ Ing_met2.place(x=29, y=263)
 
 Seleccion_metodo= IntVar()
 
-rdioSeleccion = Radiobutton(mywindow, text="Selección",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=3, command=Opcion_metodo)
+rdioSeleccion = Radiobutton(mywindow, text="Selección",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=3, command=lambda:Opcion_metodo(arreglo))
 rdioSeleccion.place(x=25, y=285)
 
-rdioInsercion = Radiobutton(mywindow, text="Inserción",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=4, command=Opcion_metodo)
+rdioInsercion = Radiobutton(mywindow, text="Inserción",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=4, command=lambda:Opcion_metodo(arreglo))
 rdioInsercion.place(x=25, y=305)
 
-rdioBurbuja = Radiobutton(mywindow, text="Burbuja",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=5, command=Opcion_metodo)
+rdioBurbuja = Radiobutton(mywindow, text="Burbuja",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=5, command=lambda:Opcion_metodo(arreglo))
 rdioBurbuja.place(x=25, y=325)
 
-rdioQuicksort = Radiobutton(mywindow, text="Quicksort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=6, command=Opcion_metodo)
+rdioQuicksort = Radiobutton(mywindow, text="Quicksort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=6, command=lambda:Opcion_metodo(arreglo))
 rdioQuicksort.place(x=25, y=345)
 
-rdioMergesort = Radiobutton(mywindow, text="Mergesort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=7, command=Opcion_metodo)
+rdioMergesort = Radiobutton(mywindow, text="Mergesort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=7, command=lambda:Opcion_metodo(arreglo))
 rdioMergesort.place(x=25, y=365)
 
-rdioHeapsort = Radiobutton(mywindow, text="Heapsort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=8, command=Opcion_metodo)
+rdioHeapsort = Radiobutton(mywindow, text="Heapsort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=8, command=lambda:Opcion_metodo(arreglo))
 rdioHeapsort.place(x=25, y=386)
 
 #-------------------------------------------------------------------
