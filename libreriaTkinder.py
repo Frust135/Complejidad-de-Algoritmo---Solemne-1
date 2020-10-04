@@ -18,7 +18,8 @@ def agregar_info():
         limites_random = limites_random.split(sep=',')
         limite_inferior = int(limites_random[0])
         limite_superior = int(limites_random[1])
-        StringIngreso = random.randint(limite_inferior,limite_superior,cantidad_valores) #Usando la librería random de numpy, se genera un arreglo con los limites inferiores y superiores, y con la cantidad de datos deseado
+        arreglo_random = random.randint(limite_inferior,limite_superior,cantidad_valores) #Usando la librería random de numpy, se genera un arreglo con los limites inferiores y superiores, y con la cantidad de datos deseado
+        StringIngreso = arreglo_random.tolist() #Convierte el array de Numpy, a un array común de Python
         User_entry3 = Entry(state='normal') #El arreglo es mostrado en pantalla en el entry 3
         User_entry3.place(x= 40, y=220)
         User_entry3.insert(0,StringIngreso)
