@@ -128,25 +128,3 @@ def generarHeap(arreglo, longitud_heap, longitud_final):
         arreglo[longitud_final] = arreglo[elemento_mayor]
         arreglo[elemento_mayor] = aux 
         generarHeap(arreglo, longitud_heap,elemento_mayor) #Se realiza el cambio, y se realiza otro Heap
-#-------------------------------------------------------------------
-#      APARTADO DE PRUEBAS 
-#-------------------------------------------------------------------
-arregloSeleccion=[10,20,7,25,5,19,32,2]
-arregloBurbuja=[10,20,7,25,5,19,32,2]
-arregloInsercion=[10,20,7,25,5,19,32,2]
-arregloQuickSort=[10,20,7,25,5,19,32,2]
-arregloMergeSort=[10,20,7,25,5,19,32,2]
-arregloHeapSort=[10,20,7,25,5,19,32,2,2,15,3,1,94]
-print("-----------------------------------------------------")
-print("El resultado de sortSelección es:", sortSeleccion(arregloSeleccion))
-print("-----------------------------------------------------")
-print("El resultado de sortBurbuja es:",sortBurbuja(arregloBurbuja))
-print("-----------------------------------------------------")
-print("El resultado de sortInsercion es:",sortInsercion(arregloInsercion))
-print("-----------------------------------------------------")
-print("El resultado de quickSort es:", quickSort(arregloQuickSort))
-print("-----------------------------------------------------")
-print("El resultado de MergeSort es:", mergeSort(arregloMergeSort))
-print("-----------------------------------------------------")
-print("El resultado de HeapSort es:", heapSort(arregloHeapSort))
-print("-----------------------------------------------------")

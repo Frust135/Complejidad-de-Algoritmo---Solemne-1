@@ -1,56 +1,62 @@
 from tkinter import *
 from libreriaOrdenamientos import *
+from numpy import random
 #muestra los datos que se agregaron a la lista
-def enviar_info():
-    User_ingreso = Ingreso.get()
-    
-    print(User_ingreso)
-
 def agregar_info():
-    StringIngreso = Ingreso.get()
-    StringIngreso = StringIngreso.split(sep=',') #Separa el arreglo en partes
-    StringIngreso = list(map(int,StringIngreso)) #Convierte el arreglo a Int
+    s=Seleccion.get()
+    StringIngreso=[]
+    StringIngreso.clear()
+    if s==1: #Se indica que se seleccionó la primera opción, es decir, ingresar el arreglo a mano
+        StringIngreso = ingreso_arreglo.get()   
+        StringIngreso = StringIngreso.split(sep=',') #Separa el arreglo en partes
+        StringIngreso = list(map(int,StringIngreso)) #Convierte el arreglo a Int
+    if s==2:
+        cantidad_valores = cantidad_random.get() #Obtiene la cantidad de valores del input "cantidad_random"
+        cantidad_valores = cantidad_valores.split(sep=',') #Se hace un split, para tomar exclusivamente el primer valor
+        cantidad_valores = int(cantidad_valores[0]) #Se selecciona el primer valor
+        limites_random = limites.get() #Se realiza lo mismo con los limites inferiores y superiores
+        limites_random = limites_random.split(sep=',')
+        limite_inferior = int(limites_random[0])
+        limite_superior = int(limites_random[1])
+        StringIngreso = random.randint(limite_inferior,limite_superior,cantidad_valores) #Usando la librería random de numpy, se genera un arreglo con los limites inferiores y superiores, y con la cantidad de datos deseado
+        User_entry3 = Entry(state='normal') #El arreglo es mostrado en pantalla en el entry 3
+        User_entry3.place(x= 40, y=220)
+        User_entry3.insert(0,StringIngreso)
+    Opcion_metodo(StringIngreso) #Se realiza el ordenamiento del arreglo
     Lista_numeros.insert(END,StringIngreso) #Añade el arreglo de int al cuadro de texto
-    print(StringIngreso)
 
 def Creacion_entrada():
     s=Seleccion.get()
-    if s==1:
-        User_entry1 = Entry(textvariable=Ingreso, state='normal')
-        User_entry2 = Entry(textvariable=Ingreso, state='disabled')
-        User_entry3 = Entry(textvariable=Ingreso, state='disabled')
+    if s==1: #Si se selecciona la primer opción, habilita el primer entry (o input), y los otros 2 quedan deshabilitados
+        User_entry1 = Entry(textvariable=ingreso_arreglo, state='normal') 
+        User_entry2 = Entry(textvariable=ingreso_nulo, state='disabled')
+        User_entry3 = Entry(state='disabled')
         User_entry1.place(x= 40, y=180)
         User_entry2.place(x= 40, y=200)
         User_entry3.place(x= 40, y=220)
-    if s==2:
-        User_entry1 = Entry(textvariable=Ingreso, state='normal')
-        User_entry2 = Entry(textvariable=Ingreso, state='normal')
-        User_entry3 = Entry(textvariable=Ingreso, state='normal')
+    if s==2: #En caso de seleccionar la segunda opción, los primeros 2 entrys o inputs, quedan habilitados
+        User_entry1 = Entry(textvariable=cantidad_random, state='normal')
+        User_entry2 = Entry(textvariable=limites, state='normal')
+        User_entry3 = Entry (state='disabled')
         User_entry1.place(x= 40, y=180)
         User_entry2.place(x= 40, y=200)
         User_entry3.place(x= 40, y=220)
-    if s!=1 and s!=2:
-        User_entry1 = Entry(textvariable=Ingreso, state='disabled')
-        User_entry2 = Entry(textvariable=Ingreso, state='disabled')
-        User_entry3 = Entry(textvariable=Ingreso, state='disabled')
+    if s!=1 and s!=2: #En caso que no se haya seleccionado ninguna opción, todos los entry o inputs se mantienen deshabilitados
+        User_entry1 = Entry(textvariable=ingreso_nulo, state='disabled')
+        User_entry2 = Entry(textvariable=ingreso_nulo, state='disabled')
+        User_entry3 = Entry(state='disabled')
         User_entry1.place(x= 40, y=180)
         User_entry2.place(x= 40, y=200)
         User_entry3.place(x= 40, y=220)
 
 def Opcion_metodo(arreglo):
     s_m= Seleccion_metodo.get()
-    if s_m==3:
-        sortSeleccion(arreglo)
-    if s_m==4:
-        sortInsercion(arreglo)
-    if s_m==5:
-        sortBurbuja(arreglo)
-    if s_m==6:
-        quickSort(arreglo)
-    if s_m==7:
-        mergeSort(arreglo)
-    if s_m==8:
-        heapSort(arreglo)
+    if s_m==3: sortSeleccion(arreglo) #Método Selección
+    if s_m==4: sortInsercion(arreglo) #Método Inserción
+    if s_m==5: sortBurbuja(arreglo) #Método Burbuja
+    if s_m==6: quickSort(arreglo) #Método QuickSort
+    if s_m==7: mergeSort(arreglo) #Método MergeSort
+    if s_m==8: heapSort(arreglo) #Método HeapSort
 
 #-------------------------------------------------------------------
 #      Creación ventana
@@ -84,7 +90,7 @@ rdioRandom = Radiobutton(mywindow, text="Ingresar números random",bg="#b48471",
 rdioRandom.place(x=25, y=150)
 
 #-------------------------------------------------------------------
-#      Seleccion de metodo de ordenamiento
+#      Selección de método de ordenamiento
 #-------------------------------------------------------------------
 Ing_met = Label(text="Ingrese el método de", bg="#b48471", font=("Cambria",13), fg="#210e0c")
 Ing_met2 = Label(text="ordenamiento", bg="#b48471", font=("Cambria",13), fg="#210e0c")
@@ -92,42 +98,44 @@ Ing_met.place(x=29, y=240)
 Ing_met2.place(x=29, y=263)
 
 Seleccion_metodo= IntVar()
-
-rdioSeleccion = Radiobutton(mywindow, text="Selección",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=3, command=lambda:Opcion_metodo(arreglo))
+rdioSeleccion = Radiobutton(mywindow, text="Selección",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=3)
 rdioSeleccion.place(x=25, y=285)
 
-rdioInsercion = Radiobutton(mywindow, text="Inserción",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=4, command=lambda:Opcion_metodo(arreglo))
+rdioInsercion = Radiobutton(mywindow, text="Inserción",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=4)
 rdioInsercion.place(x=25, y=305)
 
-rdioBurbuja = Radiobutton(mywindow, text="Burbuja",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=5, command=lambda:Opcion_metodo(arreglo))
+rdioBurbuja = Radiobutton(mywindow, text="Burbuja",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=5)
 rdioBurbuja.place(x=25, y=325)
 
-rdioQuicksort = Radiobutton(mywindow, text="Quicksort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=6, command=lambda:Opcion_metodo(arreglo))
+rdioQuicksort = Radiobutton(mywindow, text="Quicksort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=6)
 rdioQuicksort.place(x=25, y=345)
 
-rdioMergesort = Radiobutton(mywindow, text="Mergesort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=7, command=lambda:Opcion_metodo(arreglo))
+rdioMergesort = Radiobutton(mywindow, text="Mergesort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=7)
 rdioMergesort.place(x=25, y=365)
 
-rdioHeapsort = Radiobutton(mywindow, text="Heapsort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion, value=8, command=lambda:Opcion_metodo(arreglo))
+rdioHeapsort = Radiobutton(mywindow, text="Heapsort",bg="#b48471",fg="#210e0c",font=("Cambria",11),variable=Seleccion_metodo, value=8)
 rdioHeapsort.place(x=25, y=386)
 
 #-------------------------------------------------------------------
 #     Box 2
 #-------------------------------------------------------------------
-Ingreso = StringVar()
+#Variables para los inputs
+ingreso_arreglo = StringVar()
+ingreso_nulo = StringVar()
+cantidad_random = StringVar()
+limites = StringVar()
+valores_generados = StringVar()
 Creacion_entrada()
 
 box2=Label(bg="#b48471", width="35", height="21")
 box2.place(x=320, y=100)
 
-User_entry = Entry(textvariable=Ingreso)
-User_entry.place(x= 180, y=200)
 
-#creacion lista
+#Creación lista
 Lista_numeros = Listbox(mywindow)
 Lista_numeros.place(x=350, y=120)
 
-#creacion de boton para guardar la informacion
+#Creación de botón para guardar la información
 Btn_ingresa = Button(mywindow, text="Ingresar", command= agregar_info)
 Btn_ingresa.place(x=350, y=300)
 
