@@ -4,8 +4,6 @@ from numpy import random
 #muestra los datos que se agregaron a la lista
 def agregar_info():
     s=Seleccion.get()
-    StringIngreso=[]
-    StringIngreso.clear()
     if s==1: #Se indica que se seleccionó la primera opción, es decir, ingresar el arreglo a mano
         StringIngreso = ingreso_arreglo.get()   
         StringIngreso = StringIngreso.split(sep=',') #Separa el arreglo en partes

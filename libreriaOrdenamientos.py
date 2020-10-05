@@ -30,17 +30,12 @@ def sortSeleccion(arreglo):
 def sortInsercion(arreglo):
     if isOrdenado(arreglo): return arreglo
     else:
-        for recorrido in range (0, len(arreglo)):
-            if arreglo[recorrido-1]>arreglo[recorrido]: #Revisa si el elemento ubicado a la izquierda del elemento analizado es mayor a él, de ser así, hay que ordenar
-                for recorridoInsercion in range(0, recorrido): 
-                    if arreglo[recorridoInsercion]>arreglo[recorrido]: #Se busca si existe un valor mayor a la izquierda de dicho elemento, para esto, se recorren todos los valores a la izquierda
-                        aux = arreglo[recorridoInsercion] #En caso de ser así, se realiza un cambio de posición
-                        arreglo[recorridoInsercion] = arreglo[recorrido]
-                        arreglo[recorrido] = aux
-                    else: #En caso de que no exista un elemento mayor más hacia allá a la izquierda, se realiza un cambio de posición con el elemento que se encuentra exactamente una posición a la izquierda
-                        aux = arreglo[recorrido-1]
-                        arreglo[recorrido-1] = arreglo[recorrido]
-                        arreglo[recorrido] = aux
+        for recorrido in range(len(arreglo)):
+            for mayorIzq in range(recorrido,0,-1): #Recorremos hacia la izquierda del elemento para verificar si hay alguno mayor a él
+                if(arreglo[mayorIzq-1]>arreglo[mayorIzq]): #Se revisa si hacia la izquierda del elemento analizado, existe un valor mayor a él, lo mismo para todos los elementos ubicados hacia la izquierda
+                    aux = arreglo[mayorIzq]  #Si el número anterior es mayor, se realiza un cambio
+                    arreglo[mayorIzq] = arreglo[mayorIzq-1]
+                    arreglo[mayorIzq-1] = aux
     return arreglo
 #-------------------------------------------------------------------
 #      Algoritmo de ordenamiento Burbuja
