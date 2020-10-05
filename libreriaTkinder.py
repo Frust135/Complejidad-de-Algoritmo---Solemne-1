@@ -21,8 +21,8 @@ def agregar_info():
         User_entry3 = Entry(state='normal') #El arreglo es mostrado en pantalla en el entry 3
         User_entry3.place(x= 40, y=220)
         User_entry3.insert(0,StringIngreso)
-    Opcion_metodo(StringIngreso) #Se realiza el ordenamiento del arreglo
-    Lista_numeros.insert(END,StringIngreso) #Añade el arreglo de int al cuadro de texto
+    output = Opcion_metodo(StringIngreso) #Se realiza el ordenamiento del arreglo y se almacena en la variable output
+    Lista_numeros.insert(END,output) #Añade el arreglo de int al cuadro de texto
 
 def Creacion_entrada():
     s=Seleccion.get()
@@ -50,12 +50,12 @@ def Creacion_entrada():
 
 def Opcion_metodo(arreglo):
     s_m= Seleccion_metodo.get()
-    if s_m==3: sortSeleccion(arreglo) #Método Selección
-    if s_m==4: sortInsercion(arreglo) #Método Inserción
-    if s_m==5: sortBurbuja(arreglo) #Método Burbuja
-    if s_m==6: quickSort(arreglo) #Método QuickSort
-    if s_m==7: mergeSort(arreglo) #Método MergeSort
-    if s_m==8: heapSort(arreglo) #Método HeapSort
+    if s_m==3: return sortSeleccion(arreglo) #Método Selección
+    if s_m==4: return sortInsercion(arreglo) #Método Inserción
+    if s_m==5: return sortBurbuja(arreglo) #Método Burbuja
+    if s_m==6: return quickSort(arreglo) #Método QuickSort
+    if s_m==7: return mergeSort(arreglo) #Método MergeSort
+    if s_m==8: return heapSort(arreglo) #Método HeapSort
 
 #-------------------------------------------------------------------
 #      Creación ventana
