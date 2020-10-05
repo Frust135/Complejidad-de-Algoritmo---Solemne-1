@@ -1,6 +1,8 @@
 from tkinter import *
 from libreriaOrdenamientos import *
-from numpy import random
+from timeit import default_timer
+from numpy import arange, random
+import matplotlib.pyplot as plt
 #muestra los datos que se agregaron a la lista
 def agregar_info():
     s=Seleccion.get()
@@ -21,7 +23,10 @@ def agregar_info():
         User_entry3 = Entry(state='normal') #El arreglo es mostrado en pantalla en el entry 3
         User_entry3.place(x= 40, y=220)
         User_entry3.insert(0,StringIngreso)
+    inicio_timer = default_timer() #Se inicializa un timer antes de ingresar al método de ordenamiento deseado
     output = Opcion_metodo(StringIngreso) #Se realiza el ordenamiento del arreglo y se almacena en la variable output
+    fin_timer = default_timer() #Una vez que se obtenga el output, es decir, que tengamos el arreglo ordenado, se toma otro timer, que corresponderá al tiempo final de ejecución del método de ordenamiento
+    tiempo_ejecucion = fin_timer - inicio_timer #Se obtiene el tiempo de ejecución total del método de ordenamiento seleccionado
     Lista_numeros.insert(END,output) #Añade el arreglo de int al cuadro de texto
 
 def Creacion_entrada():
@@ -56,6 +61,13 @@ def Opcion_metodo(arreglo):
     if s_m==6: return quickSort(arreglo) #Método QuickSort
     if s_m==7: return mergeSort(arreglo) #Método MergeSort
     if s_m==8: return heapSort(arreglo) #Método HeapSort
+
+def generar_grafica(metodos, tiempos):
+    y_pos = arange(len(metodos)) #Para generar el gráfico, necesitamos la longitud de variables en el eje Y
+    plt.barh(y_pos, tiempos, color=(0.2, 0.4, 0.6, 0.6), height=0.4) #Con barh indicamos que será un gráfico de barras horizontal, en donde en el eje X, se ubicará el tiempo
+    plt.yticks(y_pos,metodos) #Y en el eje Y se ubicarán los nombres de los métodos
+    plt.show() #Finalmente se muestra el gráfico en pantalla
+    
 
 #-------------------------------------------------------------------
 #      Creación ventana
@@ -144,5 +156,10 @@ Btn_ingresa.place(x=350, y=300)
 #-------------------------------------------------------------------
 box3=Label(bg="#b48471", width="35", height="21")
 box3.place(x=610, y=100)
+
+metodos = ('Ordenamiento', 'Inserción', 'Burbuja')
+tiempos = [10,20,5]
+Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: generar_grafica(metodos,tiempos))
+Btn_generarGrafico.place(x=680, y=350)
 
 mywindow.mainloop()
