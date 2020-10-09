@@ -24,10 +24,13 @@ def agregar_info():
         User_entry3.place(x= 40, y=220)
         User_entry3.insert(0,StringIngreso)
     inicio_timer = default_timer() #Se inicializa un timer antes de ingresar al método de ordenamiento deseado
+    print(inicio_timer)
     output = Opcion_metodo(StringIngreso) #Se realiza el ordenamiento del arreglo y se almacena en la variable output
     fin_timer = default_timer() #Una vez que se obtenga el output, es decir, que tengamos el arreglo ordenado, se toma otro timer, que corresponderá al tiempo final de ejecución del método de ordenamiento
     tiempo_ejecucion = fin_timer - inicio_timer #Se obtiene el tiempo de ejecución total del método de ordenamiento seleccionado
-    Lista_numeros.insert(END,output) #Añade el arreglo de int al cuadro de texto
+    arreglo_retorno=[output,tiempo_ejecucion]
+    return arreglo_retorno
+    #Lista_numeros.insert(END,output) #Añade el arreglo de int al cuadro de texto
 
 def Creacion_entrada():
     s=Seleccion.get()
@@ -67,7 +70,49 @@ def generar_grafica(metodos, tiempos):
     plt.barh(y_pos, tiempos, color=(0.2, 0.4, 0.6, 0.6), height=0.4) #Con barh indicamos que será un gráfico de barras horizontal, en donde en el eje X, se ubicará el tiempo
     plt.yticks(y_pos,metodos) #Y en el eje Y se ubicarán los nombres de los métodos
     plt.show() #Finalmente se muestra el gráfico en pantalla
+def obtener_data():
+    metodos =[]
+    tiempos =[]
     
+    print(metodos)
+    print(tiempos)
+    generar_grafica(metodos,tiempos)
+    
+def crear_columna():
+    s_m=Seleccion_metodo.get()
+    info=agregar_info()
+    arreglo=info[0]
+    tiempo=info[1]
+    if s_m==3: #Método Selección
+        seleccion=tabla.grid_slaves(row=1, column=1)[0]
+        seleccion.config(text=arreglo)
+        seleccion=tabla.grid_slaves(row=1, column=2)[0]
+        seleccion.config(text=tiempo)
+    if s_m==4:
+        insercion=tabla.grid_slaves(row=2, column=1)[0]
+        insercion.config(text=arreglo)
+        insercion=tabla.grid_slaves(row=2, column=2)[0]
+        insercion.config(text=tiempo)
+    if s_m==5:
+        burbuja=tabla.grid_slaves(row=3, column=1)[0]
+        burbuja.config(text=arreglo)
+        burbuja=tabla.grid_slaves(row=3, column=2)[0]
+        burbuja.config(text=tiempo)
+    if s_m==6:
+        quicksort=tabla.grid_slaves(row=4, column=1)[0]
+        quicksort.config(text=arreglo)
+        quicksort=tabla.grid_slaves(row=4, column=2)[0]
+        quicksort.config(text=tiempo)
+    if s_m==7:
+        mergesort=tabla.grid_slaves(row=5, column=1)[0]
+        mergesort.config(text=arreglo)
+        mergesort=tabla.grid_slaves(row=5, column=2)[0]
+        mergesort.config(text=tiempo)
+    if s_m==8:
+        heapsort=tabla.grid_slaves(row=6, column=1)[0]
+        heapsort.config(text=arreglo)
+        heapsort=tabla.grid_slaves(row=6, column=2)[0]
+        heapsort.config(text=tiempo)
 
 #-------------------------------------------------------------------
 #      Creación ventana
@@ -138,28 +183,50 @@ limites = StringVar()
 valores_generados = StringVar()
 Creacion_entrada()
 
-box2=Label(bg="#b48471", width="35", height="21")
+box2=Label(bg="#b48471", width="80", height="21")
 box2.place(x=320, y=100)
 
 
 #Creación lista
-Lista_numeros = Listbox(mywindow)
-Lista_numeros.place(x=350, y=120)
+#Lista_numeros = Listbox(mywindow)
+#Lista_numeros.place(x=350, y=120)
 
 #Creación de botón para guardar la información
-Btn_ingresa = Button(mywindow, text="Ingresar", command= agregar_info)
-Btn_ingresa.place(x=350, y=300)
+Btn_ingresa = Button(mywindow, text="Ingresar", command= lambda:crear_columna())
+Btn_ingresa.place(x=520, y=375)
 
 
 #-------------------------------------------------------------------
-#      Box 3
+#     TABLA
 #-------------------------------------------------------------------
-box3=Label(bg="#b48471", width="35", height="21")
-box3.place(x=610, y=100)
+tabla=Label(bg="#b48471", width="80", height="21")
+tabla.place(x=340,y=130)
+texto = ['          Método          ', '                           Arreglo                           ', '                           Tiempo                           ']
+for fila in range(7):
+    for columna in range(3):
+        label=Label(tabla, text=texto[columna], bg="white", fg="black")
+        label.grid(row=fila, column=columna,sticky="nsew", padx=1,pady=4)
+        box2.grid_columnconfigure(columna, weight=1)
+seleccion=tabla.grid_slaves(row=1, column=0)[0]
+insercion=tabla.grid_slaves(row=2, column=0)[0]
+burbuja=tabla.grid_slaves(row=3, column=0)[0]
+quicksort=tabla.grid_slaves(row=4, column=0)[0]
+mergesort=tabla.grid_slaves(row=5, column=0)[0]
+heapsort=tabla.grid_slaves(row=6, column=0)[0]
+seleccion.config(text="Selección")
+insercion.config(text="Inserción")
+burbuja.config(text="Burbuja")
+quicksort.config(text="QuickSort")
+mergesort.config(text="MergeSort")
+heapsort.config(text="HeapSort")
+
+#-------------------------------------------------------------------
+#     GRÁFICO
+#-------------------------------------------------------------------
 
 metodos = ('Ordenamiento', 'Inserción', 'Burbuja')
 tiempos = [10,20,5]
-Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: generar_grafica(metodos,tiempos))
-Btn_generarGrafico.place(x=680, y=350)
+Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: obtener_data())
+Btn_generarGrafico.place(x=600, y=375)
 
 mywindow.mainloop()

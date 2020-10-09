@@ -123,3 +123,4 @@ def generarHeap(arreglo, longitud_heap, longitud_final):
         arreglo[longitud_final] = arreglo[elemento_mayor]
         arreglo[elemento_mayor] = aux 
         generarHeap(arreglo, longitud_heap,elemento_mayor) #Se realiza el cambio, y se realiza otro Heap
+
