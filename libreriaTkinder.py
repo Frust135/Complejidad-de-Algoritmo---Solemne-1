@@ -84,6 +84,7 @@ def generar_grafica(metodos, tiempos):
     y_pos = arange(len(metodos)) #Para generar el gráfico, necesitamos la longitud de variables en el eje Y
     plt.barh(y_pos, tiempos, color=(0.2, 0.4, 0.6, 0.6), height=0.4) #Con barh indicamos que será un gráfico de barras horizontal, en donde en el eje X, se ubicará el tiempo
     plt.yticks(y_pos,metodos) #Y en el eje Y se ubicarán los nombres de los métodos
+    plt.title("Métodos y Tiempo")
     plt.show() #Finalmente se muestra el gráfico en pantalla
 #-------------------------------------------------------------------
 #      Obtienen la información de la columna nombres y tiempos, y las almacenan en un arreglo
@@ -165,7 +166,40 @@ def crear_columna():
         heapsort.config(text=arreglo)
         heapsort=tabla.grid_slaves(row=6, column=2)[0]
         heapsort.config(text=tiempo)
-
+#-------------------------------------------------------------------
+#      Botón de limpiar tabla
+#-------------------------------------------------------------------
+def clean_tabla():
+    tiempo='                           Tiempo                           '
+    arreglo='                                                                                 Arreglo                                                                                 '
+    #Al igual que en los métodos anteriores, almacenamos el tiempo de cada fila en distintas variables
+    seleccionTiempo=tabla.grid_slaves(row=1, column=2)[0] 
+    insercionTiempo=tabla.grid_slaves(row=2, column=2)[0] 
+    burbujaTiempo=tabla.grid_slaves(row=3, column=2)[0]
+    quicksortTiempo=tabla.grid_slaves(row=4, column=2)[0]
+    mergesortTiempo=tabla.grid_slaves(row=5, column=2)[0]
+    heapsortTiempo=tabla.grid_slaves(row=6, column=2)[0]
+    #Y configuramos su texto por la variable 'Tiempo'
+    seleccionTiempo.config(text=tiempo) 
+    insercionTiempo.config(text=tiempo)
+    burbujaTiempo.config(text=tiempo)
+    quicksortTiempo.config(text=tiempo)
+    mergesortTiempo.config(text=tiempo)
+    heapsortTiempo.config(text=tiempo)
+    #Lo mismo para los arreglos
+    seleccionArreglo=tabla.grid_slaves(row=1, column=1)[0] 
+    insercionArreglo=tabla.grid_slaves(row=2, column=1)[0] 
+    burbujaArreglo=tabla.grid_slaves(row=3, column=1)[0]
+    quicksortArreglo=tabla.grid_slaves(row=4, column=1)[0]
+    mergesortArreglo=tabla.grid_slaves(row=5, column=1)[0]
+    heapsortArreglo=tabla.grid_slaves(row=6, column=1)[0]
+    #Se configura su texto por la variable 'Arreglo'
+    seleccionArreglo.config(text=arreglo) 
+    insercionArreglo.config(text=arreglo)
+    burbujaArreglo.config(text=arreglo)
+    quicksortArreglo.config(text=arreglo)
+    mergesortArreglo.config(text=arreglo)
+    heapsortArreglo.config(text=arreglo)
 #-------------------------------------------------------------------
 #      Creación ventana
 #-------------------------------------------------------------------
@@ -275,6 +309,14 @@ heapsort.config(text="HeapSort")
 #-------------------------------------------------------------------
 
 Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: obtener_data()) #Este botón ejecuta la función obtener Data, que obtiene la información de las columnas, y genera el gráfico
-Btn_generarGrafico.place(x=760, y=365)
+Btn_generarGrafico.place(x=720, y=365)
+#-------------------------------------------------------------------
+#     Botón para limpiar
+#-------------------------------------------------------------------
 
+Btn_limpiar = Button(mywindow, text="Limpiar Tabla", command=lambda: clean_tabla())
+Btn_limpiar.place(x=830,y=365)
+#-------------------------------------------------------------------
+#     Loop de la ventana
+#-------------------------------------------------------------------
 mywindow.mainloop()
