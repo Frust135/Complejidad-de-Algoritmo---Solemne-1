@@ -44,6 +44,7 @@ def Creacion_entrada():
     s=Seleccion.get()
     if s==1: #Si se selecciona la primer opción, habilita el primer entry (o input), y los otros 2 quedan deshabilitados
         User_entry1 = Entry(textvariable=ingreso_arreglo, state='normal') 
+        User_entry1.insert(0,"1,2,3,4")
         User_entry2 = Entry(textvariable=ingreso_nulo, state='disabled')
         User_entry3 = Entry(state='disabled')
         User_entry1.place(x= 40, y=180)
@@ -51,7 +52,9 @@ def Creacion_entrada():
         User_entry3.place(x= 40, y=220)
     if s==2: #En caso de seleccionar la segunda opción, los primeros 2 entrys o inputs, quedan habilitados
         User_entry1 = Entry(textvariable=cantidad_random, state='normal')
+        User_entry1.insert("0","5")
         User_entry2 = Entry(textvariable=limites, state='normal')
+        User_entry2.insert("0","1,100")
         User_entry3 = Entry (state='disabled')
         User_entry1.place(x= 40, y=180)
         User_entry2.place(x= 40, y=200)
