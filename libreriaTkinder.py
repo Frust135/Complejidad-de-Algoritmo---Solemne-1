@@ -3,7 +3,10 @@ from libreriaOrdenamientos import *
 from timeit import default_timer
 from numpy import arange, random
 import matplotlib.pyplot as plt
-#muestra los datos que se agregaron a la lista
+#-------------------------------------------------------------------
+#      Obtiene los datos del menú, y retorna un arreglo en donde va el arreglo de números ordenado, 
+#       y el tiempo demorado de la ejecución del método de ordenamiento
+#-------------------------------------------------------------------
 def agregar_info():
     s=Seleccion.get()
     if s==1: #Se indica que se seleccionó la primera opción, es decir, ingresar el arreglo a mano
@@ -31,7 +34,12 @@ def agregar_info():
     arreglo_retorno=[output,tiempo_ejecucion]
     return arreglo_retorno
     #Lista_numeros.insert(END,output) #Añade el arreglo de int al cuadro de texto
-
+#-------------------------------------------------------------------
+#      Crea los input para ingresar datos, cuando se selecciona la opción de ingresar un número
+#      Se habilita exclusivamente la primera barra para ingresar los datos
+#      En caso de seleccionar la opción Random, se habilitan las 2 barras, la primera para 
+#      Ingresar la cantidad de datos, y la segunda para ingresar el rango
+#-------------------------------------------------------------------
 def Creacion_entrada():
     s=Seleccion.get()
     if s==1: #Si se selecciona la primer opción, habilita el primer entry (o input), y los otros 2 quedan deshabilitados
@@ -55,7 +63,9 @@ def Creacion_entrada():
         User_entry1.place(x= 40, y=180)
         User_entry2.place(x= 40, y=200)
         User_entry3.place(x= 40, y=220)
-
+#-------------------------------------------------------------------
+#      Retorna el método de ordenamiento seleccionado
+#-------------------------------------------------------------------
 def Opcion_metodo(arreglo):
     s_m= Seleccion_metodo.get()
     if s_m==3: return sortSeleccion(arreglo) #Método Selección
@@ -64,51 +74,90 @@ def Opcion_metodo(arreglo):
     if s_m==6: return quickSort(arreglo) #Método QuickSort
     if s_m==7: return mergeSort(arreglo) #Método MergeSort
     if s_m==8: return heapSort(arreglo) #Método HeapSort
-
-def generar_grafica(metodos, tiempos):
+#-------------------------------------------------------------------
+#      Genera la gráfica en función de un arreglo de métodos (Nombres), y un arreglo de tiempos (Tiempo de ejecución)
+#-------------------------------------------------------------------
+def generar_grafica(metodos, tiempos): 
     y_pos = arange(len(metodos)) #Para generar el gráfico, necesitamos la longitud de variables en el eje Y
     plt.barh(y_pos, tiempos, color=(0.2, 0.4, 0.6, 0.6), height=0.4) #Con barh indicamos que será un gráfico de barras horizontal, en donde en el eje X, se ubicará el tiempo
     plt.yticks(y_pos,metodos) #Y en el eje Y se ubicarán los nombres de los métodos
     plt.show() #Finalmente se muestra el gráfico en pantalla
+#-------------------------------------------------------------------
+#      Obtienen la información de la columna nombres y tiempos, y las almacenan en un arreglo
+#      Para luego ejecutar la función de genear gráficas entregando dichos arreglos
+#-------------------------------------------------------------------
 def obtener_data():
-    metodos =[]
-    tiempos =[]
-    
-    print(metodos)
-    print(tiempos)
+    metodos =[] #Definimos el arreglo métodos, que es donde se irán almacenando los nombres de los métodos
+    tiempos =[] #Y en el arreglo tiempo, iremos agregando el tiempo que se demora cada algoritmo de ordenamiento
+#Almacenamos en una variable Tiempo lo que se encuentre en la columna 2 de cada fila, esto es aplicado con cada uno de los métodos de ordenamiento
+    seleccionTiempo=tabla.grid_slaves(row=1, column=2)[0] 
+    insercionTiempo=tabla.grid_slaves(row=2, column=2)[0] 
+    burbujaTiempo=tabla.grid_slaves(row=3, column=2)[0]
+    quicksortTiempo=tabla.grid_slaves(row=4, column=2)[0]
+    mergesortTiempo=tabla.grid_slaves(row=5, column=2)[0]
+    heapsortTiempo=tabla.grid_slaves(row=6, column=2)[0]
+    if (isinstance(seleccionTiempo.cget("text"),float)==True): #Revisamos si la variable corresponde a un float, es decir, corresponde a un valor con la estructura de tiempo
+        tiempos.append(seleccionTiempo.cget("text")) #De ser así, este valor lo ingresamos dentro de nuestro arreglo tiempo
+        seleccionNombre=tabla.grid_slaves(row=1, column=0)[0] #Obtenemos también el nombre de dicho método de ordenamiento
+        metodos.append(seleccionNombre.cget("text")) #Y lo ingresamos en el arreglo de métodos
+#Esto lo aplicamos con cada uno de los métodos existentes
+    if (isinstance(insercionTiempo.cget("text"),float)==True):
+        tiempos.append(insercionTiempo.cget("text"))
+        insercionNombre=tabla.grid_slaves(row=2, column=0)[0]
+        metodos.append(insercionNombre.cget("text"))
+    if (isinstance(burbujaTiempo.cget("text"),float)==True):
+        tiempos.append(burbujaTiempo.cget("text"))
+        burbujaNombre=tabla.grid_slaves(row=3, column=0)[0]
+        metodos.append(burbujaNombre.cget("text"))
+    if (isinstance(quicksortTiempo.cget("text"),float)==True):
+        tiempos.append(quicksortTiempo.cget("text"))
+        quicksortNombre=tabla.grid_slaves(row=4, column=0)[0]
+        metodos.append(quicksortNombre.cget("text"))
+    if (isinstance(mergesortTiempo.cget("text"),float)==True):
+        tiempos.append(mergesortTiempo.cget("text"))
+        mergesortNombre=tabla.grid_slaves(row=5, column=0)[0]
+        metodos.append(mergesortNombre.cget("text"))
+    if (isinstance(heapsortTiempo.cget("text"),float)==True):
+        tiempos.append(heapsortTiempo.cget("text"))
+        heapsortNombre=tabla.grid_slaves(row=6, column=0)[0]
+        metodos.append(heapsortNombre.cget("text"))
+#Finalmente con nuestros arreglos de métodos y tiempos, continuamos a genera el gráfico y mostrarlo en pantalla    
     generar_grafica(metodos,tiempos)
-    
+#-------------------------------------------------------------------
+#      Crea (O mejor dicho) modifica las columnas de la talba para escribir el arreglo ordenado, y el tiempo de 
+#      ejecución de dicho algoritmo ede ordenamiento
+#-------------------------------------------------------------------    
 def crear_columna():
-    s_m=Seleccion_metodo.get()
-    info=agregar_info()
-    arreglo=info[0]
-    tiempo=info[1]
+    s_m=Seleccion_metodo.get() #Obtiene la información de que método fue seleccionado
+    info=agregar_info() #Genera la información, es decir, el arreglo ordenado y el tiempo de ejecución
+    arreglo=info[0] #El arreglo es lamacenado dentro de la variable arreglo
+    tiempo=info[1] #Y el tiempo es agregado a la variable tiempo
     if s_m==3: #Método Selección
-        seleccion=tabla.grid_slaves(row=1, column=1)[0]
-        seleccion.config(text=arreglo)
-        seleccion=tabla.grid_slaves(row=1, column=2)[0]
-        seleccion.config(text=tiempo)
-    if s_m==4:
+        seleccion=tabla.grid_slaves(row=1, column=1)[0] #Se selecciona la columna de arreglo
+        seleccion.config(text=arreglo) #E inserta (O mejor dicho, módifica) en la columna arreglo, el arreglo obtenido 
+        seleccion=tabla.grid_slaves(row=1, column=2)[0] #Lo mismo con el tiempo, se selecciona la variable tiempo
+        seleccion.config(text=tiempo) #Y se inserta. Esto se repite con cada uno de los métodos de ordenamiento
+    if s_m==4: #Método Inserción
         insercion=tabla.grid_slaves(row=2, column=1)[0]
         insercion.config(text=arreglo)
         insercion=tabla.grid_slaves(row=2, column=2)[0]
         insercion.config(text=tiempo)
-    if s_m==5:
+    if s_m==5: #Método Burbuja
         burbuja=tabla.grid_slaves(row=3, column=1)[0]
         burbuja.config(text=arreglo)
         burbuja=tabla.grid_slaves(row=3, column=2)[0]
         burbuja.config(text=tiempo)
-    if s_m==6:
+    if s_m==6: #Método QuickSort
         quicksort=tabla.grid_slaves(row=4, column=1)[0]
         quicksort.config(text=arreglo)
         quicksort=tabla.grid_slaves(row=4, column=2)[0]
         quicksort.config(text=tiempo)
-    if s_m==7:
+    if s_m==7: #Método MergeSort
         mergesort=tabla.grid_slaves(row=5, column=1)[0]
         mergesort.config(text=arreglo)
         mergesort=tabla.grid_slaves(row=5, column=2)[0]
         mergesort.config(text=tiempo)
-    if s_m==8:
+    if s_m==8: #Método HeapSort 
         heapsort=tabla.grid_slaves(row=6, column=1)[0]
         heapsort.config(text=arreglo)
         heapsort=tabla.grid_slaves(row=6, column=2)[0]
@@ -119,7 +168,7 @@ def crear_columna():
 #-------------------------------------------------------------------
 
 mywindow=Tk()
-mywindow.geometry("910x450")
+mywindow.geometry("1270x450")
 mywindow.title("Metodos de búsqueda")
 mywindow['bg'] = '#72382e'
 
@@ -183,17 +232,13 @@ limites = StringVar()
 valores_generados = StringVar()
 Creacion_entrada()
 
-box2=Label(bg="#b48471", width="80", height="21")
+box2=Label(bg="#b48471", width="130", height="21")
 box2.place(x=320, y=100)
 
 
-#Creación lista
-#Lista_numeros = Listbox(mywindow)
-#Lista_numeros.place(x=350, y=120)
-
 #Creación de botón para guardar la información
-Btn_ingresa = Button(mywindow, text="Ingresar", command= lambda:crear_columna())
-Btn_ingresa.place(x=520, y=375)
+Btn_ingresa = Button(mywindow, text="Ingresar", command= lambda:crear_columna()) #Este botón crea (O mejor dicho módifica) una columna
+Btn_ingresa.place(x=650, y=365)
 
 
 #-------------------------------------------------------------------
@@ -201,32 +246,32 @@ Btn_ingresa.place(x=520, y=375)
 #-------------------------------------------------------------------
 tabla=Label(bg="#b48471", width="80", height="21")
 tabla.place(x=340,y=130)
-texto = ['          Método          ', '                           Arreglo                           ', '                           Tiempo                           ']
+texto = ['          Método          ', '                                                                                 Arreglo                                                                                 ', '                           Tiempo                           ']
+#Se genera la tabla
 for fila in range(7):
     for columna in range(3):
         label=Label(tabla, text=texto[columna], bg="white", fg="black")
         label.grid(row=fila, column=columna,sticky="nsew", padx=1,pady=4)
         box2.grid_columnconfigure(columna, weight=1)
+#Se selecciona cada fila correspondiente a su método de ordenamiento, y la columna 0 correspondiente al nombre
 seleccion=tabla.grid_slaves(row=1, column=0)[0]
 insercion=tabla.grid_slaves(row=2, column=0)[0]
 burbuja=tabla.grid_slaves(row=3, column=0)[0]
 quicksort=tabla.grid_slaves(row=4, column=0)[0]
 mergesort=tabla.grid_slaves(row=5, column=0)[0]
 heapsort=tabla.grid_slaves(row=6, column=0)[0]
+#Y se cambia el nombre de cada una de las columnas por sus respectivos nombres
 seleccion.config(text="Selección")
 insercion.config(text="Inserción")
 burbuja.config(text="Burbuja")
 quicksort.config(text="QuickSort")
 mergesort.config(text="MergeSort")
 heapsort.config(text="HeapSort")
-
 #-------------------------------------------------------------------
 #     GRÁFICO
 #-------------------------------------------------------------------
 
-metodos = ('Ordenamiento', 'Inserción', 'Burbuja')
-tiempos = [10,20,5]
-Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: obtener_data())
-Btn_generarGrafico.place(x=600, y=375)
+Btn_generarGrafico = Button(mywindow, text="Generar Gráfico", command=lambda: obtener_data()) #Este botón ejecuta la función obtener Data, que obtiene la información de las columnas, y genera el gráfico
+Btn_generarGrafico.place(x=760, y=365)
 
 mywindow.mainloop()
